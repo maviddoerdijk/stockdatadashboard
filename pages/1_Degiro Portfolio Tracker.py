@@ -28,7 +28,7 @@ if not uploaded_file:
     st.stop()
 
 df = load_data(uploaded_file)
-st.write(df)
+# st.write(df)
 
 class Portfolio:
     def __init__(self, start_date, end_date):
@@ -190,7 +190,7 @@ for i, row in df.iterrows():
     #     portfolio.sell(-n, ticker, row['Datum'])
     # if n > 0:
     #     portfolio.buy(n, ticker, row['Datum'])
-st.write(all_actions)
+# st.write(all_actions)
 
 
 # we know that 2022-09-19 00:00:00
@@ -208,7 +208,7 @@ for action in all_actions:
         portfolio.buy(n, ticker, date_reformatted)
 
 # Show the portfolio dataframe
-st.write(portfolio.portfolio_df)
+# st.write(portfolio.portfolio_df)
 
 # Plot the portfolio using Streamlit
 st.line_chart(portfolio.portfolio_df['Portfolio Value'])
