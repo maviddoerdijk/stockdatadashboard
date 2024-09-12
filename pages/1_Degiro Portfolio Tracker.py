@@ -44,10 +44,10 @@ class Portfolio:
     def buy(self, n, ticker, buy_date):
         # Fetch historical data using yfinance for the specified ticker
         stock_data = yf.download(ticker, start=buy_date, end=self.dates[-1])
-        stock_data = stock_data['Close']  # We only need the closing prices
-
-        # If any zero values in the dates since the buy date, forward fill them
-        stock_data = stock_data.ffill()
+        stock_data = stock_data['Close']  # We only need the closing prices    
+        
+        # save stock_data to excel for debugging
+        stock_data.to_excel('stock_data.xlsx')    
         
         # Check if any NaN values are present in the stock data since the buy date, then print which dates
         if stock_data.loc[buy_date:].isnull().values.any():
@@ -81,7 +81,7 @@ class Portfolio:
         stock_data = yf.download(ticker, start=self.dates[0], end=sell_date)
         stock_data = stock_data['Close']  # We only need the closing prices
 
-        # If any zero values in the dates since the buy date, forward fill them
+        stock_data = stock_data.replace(0, pd.NA)
         stock_data = stock_data.ffill()
         
         # Check if any NaN values are present in the stock data up to the sell date, then print which dates
@@ -186,15 +186,7 @@ for i, row in df.iterrows():
         'Datum': row['Datum'],
         'Actie': "Buy" if n > 0 else "Sell"
     })
-    # if n < 0:
-    #     portfolio.sell(-n, ticker, row['Datum'])
-    # if n > 0:
-    #     portfolio.buy(n, ticker, row['Datum'])
-# st.write(all_actions)
 
-
-# we know that 2022-09-19 00:00:00
-# through 2024-09-09 00:00:00
 # is the date range of the portfolio
 for action in all_actions:
     n = action['Aantal']
@@ -207,8 +199,8 @@ for action in all_actions:
     if n > 0:
         portfolio.buy(n, ticker, date_reformatted)
 
-# Show the portfolio dataframe
-# st.write(portfolio.portfolio_df)
+portfolio.portfolio_df['Portfolio Value'] = portfolio.portfolio_df['Portfolio Value'].replace(0, pd.NA)
+portfolio.portfolio_df['Portfolio Value'] = portfolio.portfolio_df['Portfolio Value'].ffill()
 
 # Plot the portfolio using Streamlit
 st.line_chart(portfolio.portfolio_df['Portfolio Value'])
