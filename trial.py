@@ -1,9 +1,4 @@
-import pandas as pd
+import streamlit as st
+import os
 
-df = pd.read_excel('portfolio.xlsx')
-print(df.head(n=100))
-
-df['Portfolio Value'] = df['Portfolio Value'].replace(0, pd.NA)
-df['Portfolio Value'] = df['Portfolio Value'].ffill()
-
-print(df.head(n=100))
+st.image(os.path.join('resources', 'images', 'FAQ', 'img1_rekeningoverzicht.png'), use_column_width=True)

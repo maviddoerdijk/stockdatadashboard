@@ -1,3 +1,7 @@
 streamlit
 yfinance
 BeautifulSoup4
+streamlit-extras
+openpyxl
+pandas
+requests
