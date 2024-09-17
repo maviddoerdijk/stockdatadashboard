@@ -4,7 +4,6 @@ import yfinance as yf
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
-import streamlit_cookies_manager
 import uuid
 
 st.title("Degiro Portfolio Tracker")
